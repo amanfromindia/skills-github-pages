@@ -11,7 +11,7 @@
         <a href="https://amanfromindia.github.io/skills-github-pages/2025/03/21/projects.html">Projects</a>
       </li>
       <li>
-       <a href:"https://amanfromindia.github.io/skills-github-pages/2025/03/21/Skillsets.html">Skillsets</a>
+       <a href="https://amanfromindia.github.io/skills-github-pages/2025/03/21/Skillsets.html">Skillsets</a>
       </li>
       <li>
         <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Experiences</a>
@@ -69,31 +69,31 @@
     <h2>Contact Me</h2>
     <ul>
       <li>
-        <a href="https://www.behance.net/amanghildiyal02">Email</a>- 3D Printing, Prototyping
+        <a href="https://www.behance.net/amanghildiyal02">Email</a>
       </li>
       <li>
-       <a href="https://www.printables.com/@BouncingGear_2099814">WhatsApp</a>- Rapid Prototyping
+       <a href="https://www.printables.com/@BouncingGear_2099814">WhatsApp</a>
       </li>
       <li>
-        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Services</a>- Curriculum
+        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Services</a>
       </li>
       <li>
-        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Freelance</a>- Passion
+        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Freelance</a>
       </li>
       <li>
-        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Contract</a>- Pride and Integrity
+        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Contract</a>
       </li>
       <li>
-        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Sculpting</a>- Personal Project
+        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Sculpting</a>
       </li>
       <li>
-        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">CAD Modelling</a>- Curriculum
+        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">CAD Modelling</a>
       </li>
       <li>
-        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Animation</a>- Passion
+        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Animation</a>
       </li>
       <li>
-        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Coding</a>- Portfolio, Digital Product Prototyping
+        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Coding</a>
       </li>
     </ul>
   </body>
