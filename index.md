@@ -8,10 +8,10 @@
     <h2>Important Links</h2>
     <ul>
       <li>
-        <a href="https://www.behance.net/amanghildiyal02">Projects</a>
+        <a href="https://amanfromindia.github.io/skills-github-pages/2025/03/21/projects.html">Projects</a>
       </li>
       <li>
-       <a href:"https://www.printables.com/@BouncingGear_2099814">Skillsets</a>
+       <a href:"https://amanfromindia.github.io/skills-github-pages/2025/03/21/Skillsets.html">Skillsets</a>
       </li>
       <li>
         <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Experiences</a>
