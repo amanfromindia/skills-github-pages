@@ -34,6 +34,9 @@
       <li>
         <a href="https://www.youtube.com/watch?v=nrehykjkF-8">Action Figure Development Process</a>- Personal Project- 5Y
       </li>
+      <li>
+        <a href="https://www.youtube.com/watch?v=nrehykjkF-8">FD</a>- Furniture Design- 4M
+      </li>
     </ul>
       <h2>Skillsets</h2>
       <h3>Progression: Novice-Beginner-Intermediate-Expert-Master</h3>
