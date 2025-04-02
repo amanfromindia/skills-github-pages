@@ -7,205 +7,120 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Minimalist font */
-            margin: 10px;
-            background-color: #f8f8f8;
-            color: #333;
-            transition: background-color 0.3s ease;
+            font-family: 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
+            margin: 0;
+            background-color: #000;
+            color: #f0f0f0;
+            line-height: 1.6;
         }
         .tab-container {
             display: flex;
-            overflow-x: auto;
-            flex-wrap: nowrap;
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 15px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            background-color: #111;
+            border-bottom: 1px solid #333;
         }
         .tab-button {
-            padding: 10px 12px;
+            padding: 10px 15px;
             border: none;
             background-color: transparent;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
-            font-weight: normal;
-            color: #555;
-            transition: color 0.3s ease, border-bottom-color 0.3s ease;
-            white-space: nowrap;
-            text-transform: uppercase; /* Uppercase tab text */
-            font-size: 0.85em; /* Slightly smaller uppercase text */
+            color: #777;
+            font-size: 0.9em;
         }
         .tab-button.active {
-            border-bottom-color: #007bff;
-            color: #007bff;
-            font-weight: bold;
+            color: #f0f0f0;
+            border-bottom: 2px solid #f0f0f0;
         }
         .tab-button:hover {
-            color: #007bff;
+            background-color: #222;
         }
         .tab-content {
-            padding: 15px;
-            background-color: #fff;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            padding: 20px;
         }
-        .tab-content.active {
-            opacity: 1;
-            transform: translateY(0);
+        .tab-content:not(.active) {
+            display: none;
         }
         .chart-container {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            margin: 15px auto;
-            position: relative;
+            width: 600px; /* Increased size for combined chart */
+            height: 600px;
+            margin: 20px auto;
+            position: relative; /* For overlaying if needed in future */
         }
         .input-forms {
-            padding: 15px;
-            background-color: #fff;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-top: 1px solid #333;
         }
         .input-forms h3 {
             margin-top: 0;
-            color: #333;
-            font-weight: 500;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 8px;
-            margin-bottom: 10px;
-            font-size: 1.1em; /* Slightly smaller uppercase heading */
-            text-transform: uppercase; /* Uppercase heading */
+            color: #f0f0f0;
+            font-size: 1.2em;
+            margin-bottom: 15px;
         }
         .input-forms label {
             display: block;
-            margin-bottom: 3px;
-            color: #555;
-            font-weight: normal;
-            font-size: 0.85em; /* Slightly smaller label */
+            margin-bottom: 5px;
+            color: #999;
+            font-size: 0.9em;
         }
         .input-forms input[type="text"],
         .input-forms input[type="number"],
         .input-forms select {
-            width: calc(100% - 12px);
+            width: 100%;
             padding: 8px;
-            margin-bottom: 8px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            margin-bottom: 10px;
             box-sizing: border-box;
-            font-size: 0.85em; /* Slightly smaller input text */
-            transition: border-color 0.3s ease;
-        }
-        .input-forms input[type="text"]:focus,
-        .input-forms input[type="number"]:focus,
-        .input-forms select:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+            background-color: #333;
+            color: #f0f0f0;
+            border: 1px solid #555;
         }
         .input-forms button {
             padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
+            background-color: #f0f0f0;
+            color: #000;
             border: none;
-            border-radius: 3px;
             cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            font-size: 0.85em; /* Slightly smaller uppercase button text */
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            text-transform: uppercase; /* Uppercase button text */
+            font-size: 0.9em;
         }
         .input-forms button:hover {
-            background-color: #0056b3;
-            transform: scale(1.02);
-            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
+            background-color: #ccc;
         }
         .task-list-container, .finished-task-container {
-            margin-top: 15px;
-            border: 1px solid #eee;
+            margin-top: 20px;
+            border: 1px solid #333;
             padding: 10px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .task-list-container h3 {
-            color: #333;
-            font-weight: 500;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 8px;
-            margin-bottom: 10px;
-            font-size: 1em; /* Slightly smaller uppercase heading */
-            text-transform: uppercase; /* Uppercase heading */
-        }
-        .finished-task-container h2 {
-            color: #333;
-            font-weight: 500;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 8px;
-            margin-bottom: 10px;
-            font-size: 1em; /* Slightly smaller uppercase heading */
-            text-transform: uppercase; /* Uppercase heading */
         }
         .task-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
-            font-size: 0.85em; /* Slightly smaller task item text */
-            transition: background-color 0.3s ease;
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+            font-size: 0.95em;
         }
         .task-item:last-child {
             border-bottom: none;
         }
-        .task-item:hover {
-            background-color: #f9f9f9;
-        }
         .task-actions button {
             margin-left: 5px;
-            padding: 5px 8px;
             cursor: pointer;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            background-color: transparent;
-            color: #555;
-            font-size: 0.75em; /* Even smaller uppercase action buttons */
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            text-transform: uppercase; /* Uppercase action button text */
+            background-color: #555;
+            color: #f0f0f0;
+            border: none;
+            padding: 5px 8px;
+            font-size: 0.8em;
         }
         .task-actions button:hover {
-            background-color: #ddd;
-            color: #333;
-            transform: scale(1.05);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            background-color: #777;
         }
         .popup {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #fff;
-            border: 1px solid #eee;
-            padding: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             z-index: 1000;
-            border-radius: 5px;
-            width: 80%;
-            max-width: 300px;
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.9);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .popup.show {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
         }
         .overlay {
             position: fixed;
@@ -213,30 +128,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .overlay.show {
-            opacity: 1;
         }
         .timer-container {
             margin-top: 10px;
             font-weight: bold;
-            color: #333;
-            font-size: 0.9em; /* Slightly smaller timer text */
-            text-transform: uppercase; /* Uppercase timer label */
+            color: #f0f0f0;
+            font-size: 0.9em;
         }
         #currentTaskListDisplay {
             list-style-type: none;
             padding: 0;
         }
         #currentTaskListDisplay li {
-            border-bottom: 1px solid #eee;
-            padding: 6px 0;
-            color: #555;
-            font-size: 0.85em; /* Slightly smaller task list text */
+            border-bottom: 1px solid #333;
+            padding: 8px 0;
+            font-size: 0.95em;
         }
         #currentTaskListDisplay li:last-child {
             border-bottom: none;
@@ -244,110 +152,27 @@
         #currentTaskListDisplay li span {
             font-weight: bold;
         }
-        .popup h4 {
-            margin-top: 0;
-            color: #333;
-            font-weight: 500;
-            margin-bottom: 10px;
-            font-size: 1em; /* Slightly smaller uppercase popup title */
-            text-transform: uppercase; /* Uppercase popup title */
-        }
-        .popup-actions {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-        }
         .popup-actions button {
-            margin-left: 0;
-            margin-bottom: 5px;
+            margin-right: 10px;
             padding: 8px 12px;
             cursor: pointer;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-weight: 500;
-            background-color: #eee;
-            color: #333;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            font-size: 0.8em; /* Even smaller uppercase popup action buttons */
-            text-transform: uppercase; /* Uppercase popup action button text */
-        }
-        .popup-actions button:last-child {
-            margin-bottom: 0;
+            background-color: #f0f0f0;
+            color: #000;
+            border: none;
+            font-size: 0.8em;
         }
         .popup-actions button:hover {
-            background-color: #ddd;
-            color: #333;
-            transform: scale(1.02);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Media query for smaller screens */
-        @media (max-width: 600px) {
-            body {
-                margin: 8px;
-            }
-            .tab-container {
-                margin-bottom: 10px;
-            }
-            .tab-button {
-                padding: 8px 10px;
-                font-size: 0.75em; /* Further reduce font size on very small screens */
-            }
-            .tab-content {
-                padding: 10px;
-                margin-bottom: 10px;
-            }
-            .input-forms h3 {
-                font-size: 1em; /* Further reduce font size on very small screens */
-                margin-bottom: 8px;
-            }
-            .input-forms label {
-                font-size: 0.8em; /* Further reduce font size on very small screens */
-            }
-            .input-forms input[type="text"],
-            .input-forms input[type="number"],
-            .input-forms select {
-                font-size: 0.8em; /* Further reduce font size on very small screens */
-                padding: 6px;
-                margin-bottom: 6px;
-            }
-            .input-forms button {
-                font-size: 0.8em; /* Further reduce font size on very small screens */
-                padding: 8px 12px;
-            }
-            .task-list-container h3, .finished-task-container h2 {
-                font-size: 0.9em; /* Further reduce font size on very small screens */
-                margin-bottom: 8px;
-            }
-            .task-item {
-                font-size: 0.8em; /* Further reduce font size on very small screens */
-                padding: 5px 0;
-            }
-            .task-actions button {
-                font-size: 0.7em; /* Further reduce font size on very small screens */
-                padding: 4px 6px;
-            }
-            .popup {
-                padding: 10px;
-            }
-            .timer-container {
-                font-size: 0.8em; /* Further reduce font size on very small screens */
-            }
-            #currentTaskListDisplay li {
-                font-size: 0.8em; /* Further reduce font size on very small screens */
-                padding: 5px 0;
-            }
+            background-color: #ccc;
         }
     </style>
 </head>
 <body>
 
     <div class="tab-container">
-        <button class="tab-button active" onclick="openTab('combinedChart')">Combined Chart</button>
-        <button class="tab-button" onclick="openTab('taskPieChart')">Task Chart</button>
-        <button class="tab-button" onclick="openTab('subtaskPieChart')">Sub-task Chart</button>
-        <button class="tab-button" onclick="openTab('list')">Current Tasks</button>
+        <button class="tab-button active" onclick="openTab('combinedChart')">Combined</button>
+        <button class="tab-button" onclick="openTab('taskPieChart')">Tasks</button>
+        <button class="tab-button" onclick="openTab('subtaskPieChart')">Sub-tasks</button>
+        <button class="tab-button" onclick="openTab('list')">List</button>
         <button class="tab-button" onclick="openTab('input')">Input</button>
         <button class="tab-button" onclick="openTab('history')">History</button>
     </div>
@@ -355,7 +180,7 @@
     <div id="combinedChart" class="tab-content active">
         <h2>Combined Task and Sub-task Chart</h2>
         <div class="chart-container">
-            <canvas id="combinedChartCanvas" width="400" height="400"></canvas>
+            <canvas id="combinedChartCanvas" width="600" height="600"></canvas>
         </div>
     </div>
 
@@ -380,28 +205,25 @@
     </div>
 
     <div id="input" class="tab-content">
-        <h2>Input Tasks and Sub-tasks</h2>
-        <div class="input-forms">
-            <h3>Add New Task</h3>
-            <label for="taskName">Task Name:</label>
-            <input type="text" id="taskName"><br>
-            <label for="taskHours">Task Duration (Hours):</label>
-            <input type="number" id="taskHours" min="0" value="0">
-            <label for="taskMinutes">Minutes:</label>
-            <input type="number" id="taskMinutes" min="0" max="59" value="0"><br>
-            <button onclick="addTask()">Add Task</button>
+        <h3>Add New Task</h3>
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName"><br>
+        <label for="taskHours">Hours:</label>
+        <input type="number" id="taskHours" min="0" value="0">
+        <label for="taskMinutes">Minutes:</label>
+        <input type="number" id="taskMinutes" min="0" max="59" value="0"><br>
+        <button onclick="addTask()">Add Task</button>
 
-            <h3>Add Sub-task to Existing Task</h3>
-            <label for="parentTask">Select Task:</label>
-            <select id="parentTask"></select><br>
-            <label for="subtaskName">Sub-task Name:</label>
-            <input type="text" id="subtaskName"><br>
-            <label for="subtaskHours">Sub-task Duration (Hours):</label>
-            <input type="number" id="subtaskHours" min="0" value="0">
-            <label for="subtaskMinutes">Minutes:</label>
-            <input type="number" id="subtaskMinutes" min="0" max="59" value="0"><br>
-            <button onclick="addSubtask()">Add Sub-task</button>
-        </div>
+        <h3>Add Sub-task</h3>
+        <label for="parentTask">Task:</label>
+        <select id="parentTask"></select><br>
+        <label for="subtaskName">Sub-task Name:</label>
+        <input type="text" id="subtaskName"><br>
+        <label for="subtaskHours">Hours:</label>
+        <input type="number" id="subtaskHours" min="0" value="0">
+        <label for="subtaskMinutes">Minutes:</label>
+        <input type="number" id="subtaskMinutes" min="0" max="59" value="0"><br>
+        <button onclick="addSubtask()">Add Sub-task</button>
     </div>
 
     <div id="history" class="tab-content">
@@ -424,7 +246,7 @@
             <ul id="popupSubtaskList"></ul>
             <div id="timerDisplay" class="timer-container"></div>
             <div class="popup-actions">
-                <button onclick="startTimer()">Start Timer</button>
+                <button onclick="startTimer()">Start</button>
                 <button onclick="manualCompleteTask()">Complete</button>
                 <button onclick="editSelectedItem()">Edit</button>
                 <button onclick="cancelSelectedItem()">Cancel</button>
@@ -442,12 +264,9 @@
         let taskPieChartInstance;
         let subtaskPieChartInstance;
         let combinedChartInstance; // New instance for combined chart
-        const softPalette = ['#e0e0e0', '#a6a6a6', '#f0f0f0', '#d1d1d1', '#c2c2c2', '#8c8c8c'];
-        const blankSubtaskColor = '#777'; // Darker grey for "Blank" subtask
-        const tabContents = document.querySelectorAll('.tab-content');
-        const popupContainer = document.getElementById('popupContainer');
-        const overlay = popupContainer.querySelector('.overlay');
-        const popup = popupContainer.querySelector('.popup');
+        const softPalette = ['#a8dadc', '#457b9d', '#f1faee', '#e63946', '#f4a261', '#8e2de2'];
+        const nothingGrey = '#333'; // A dark grey for general use
+        const blankSubtaskColor = '#555'; // Darker grey for "Blank" subtask
 
         // Placeholder data for testing (durations in minutes)
         tasks.push({
@@ -466,17 +285,11 @@
         });
 
         function openTab(tabId) {
-            tabContents.forEach(tab => {
-                tab.classList.remove('active');
-                tab.style.display = 'none';
-            });
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
             const buttons = document.querySelectorAll('.tab-button');
             buttons.forEach(button => button.classList.remove('active'));
-            const targetTab = document.getElementById(tabId);
-            if (targetTab) {
-                targetTab.style.display = 'block';
-                setTimeout(() => targetTab.classList.add('active'), 0); // Add active class after display is set
-            }
+            document.getElementById(tabId).classList.add('active');
             document.querySelector(`.tab-button[onclick="openTab('${tabId}')"]`).classList.add('active');
 
             if (tabId === 'list') {
@@ -496,13 +309,12 @@
             tasks.forEach(task => {
                 const totalDuration = calculateTotalDuration(task);
                 const listItem = document.createElement('li');
-                listItem.classList.add('task-item'); // Ensure task-item class is added
-                listItem.innerHTML = `<span>${task.name.toUpperCase()}</span> (${formatTime(totalDuration)})`; // Uppercase task name in list
+                listItem.innerHTML = `<span>${task.name}</span> (${formatTime(totalDuration)})`;
                 if (task.subtasks && task.subtasks.length > 0) {
                     const subtaskList = document.createElement('ul');
                     task.subtasks.forEach(subtask => {
                         const sublistItem = document.createElement('li');
-                        sublistItem.textContent = `- ${subtask.name.toUpperCase()} (${formatTime(subtask.duration)})`; // Uppercase subtask name
+                        sublistItem.textContent = `- ${subtask.name} (${formatTime(subtask.duration)})`;
                         subtaskList.appendChild(sublistItem);
                     });
                     listItem.appendChild(subtaskList);
@@ -516,9 +328,9 @@
 
         function updateTaskListDropdown() {
             const parentTaskDropdown = document.getElementById('parentTask');
-            parentTaskDropdown.innerHTML = '<option value="">-- Select a Task --</option>';
+            parentTaskDropdown.innerHTML = '<option value="">-- Select Task --</option>';
             tasks.forEach((task, index) => {
-                parentTaskDropdown.innerHTML += `<option value="${index}">${task.name.toUpperCase()}</option>`; // Uppercase in dropdown
+                parentTaskDropdown.innerHTML += `<option value="${index}">${task.name}</option>`;
             });
         }
 
@@ -617,7 +429,7 @@
                 taskPieChartInstance.destroy();
             }
 
-            const labels = tasks.map(task => `${task.name.toUpperCase()} (${formatTime(task.duration)})`); // Uppercase labels
+            const labels = tasks.map(task => `${task.name} (${formatTime(task.duration)})`);
             const data = tasks.map(task => task.duration);
             const backgroundColors = tasks.map((_, index) => softPalette[index % softPalette.length]);
 
@@ -628,14 +440,12 @@
                     datasets: [{
                         data: data,
                         backgroundColor: backgroundColors,
-                        borderColor: '#f8f8f8', // Soft outline color (light grey - same as body background)
                         borderWidth: 1,
+                        borderColor: '#333',
                         hoverOffset: 4
                     }]
                 },
                 options: {
-                    responsive: true, // Enable responsiveness
-                    maintainAspectRatio: false, // Allow chart to scale freely
                     plugins: {
                         legend: {
                             display: false,
@@ -675,9 +485,11 @@
 
             tasks.forEach(task => {
                 task.subtasks.forEach(subtask => {
-                    subtaskLabels.push(`${task.name.toUpperCase()}: ${subtask.name.toUpperCase()} (${formatTime(subtask.duration)})`); // Uppercase labels
-                    subtaskData.push(subtask.duration);
-                    subtaskBackgroundColors.push(subtask.name === 'Blank' ? blankSubtaskColor : softPalette[tasks.findIndex(t => t.subtasks.some(st => st.id === subtask.id)) % softPalette.length]);
+                    if (subtask.name !== 'Blank') {
+                        subtaskLabels.push(`${task.name}: ${subtask.name} (${formatTime(subtask.duration)})`);
+                        subtaskData.push(subtask.duration);
+                        subtaskBackgroundColors.push(softPalette[tasks.findIndex(t => t.subtasks.some(st => st.id === subtask.id)) % softPalette.length]);
+                    }
                 });
             });
 
@@ -688,14 +500,12 @@
                     datasets: [{
                         data: subtaskData,
                         backgroundColor: subtaskBackgroundColors,
-                        borderColor: '#f8f8f8', // Soft outline color
                         borderWidth: 1,
+                        borderColor: '#333',
                         hoverOffset: 4
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
                             display: false,
@@ -716,11 +526,13 @@
                             let clickedSubtask, parentTask;
                             for (const task of tasks) {
                                 for (const subtask of task.subtasks) {
-                                    currentIndex++;
-                                    if (currentIndex === clickedIndex) {
-                                        clickedSubtask = subtask;
-                                        parentTask = task;
-                                        break;
+                                    if (subtask.name !== 'Blank') {
+                                        currentIndex++;
+                                        if (currentIndex === clickedIndex) {
+                                            clickedSubtask = subtask;
+                                            parentTask = task;
+                                            break;
+                                        }
                                     }
                                 }
                                 if (clickedSubtask) break;
@@ -748,13 +560,13 @@
                 }
             });
 
-            const subtaskLabels = orderedSubtasksData.map(subtask => `${findParentTaskName(subtask.id).toUpperCase()}: ${subtask.name.toUpperCase()} (${formatTime(subtask.duration)})`); // Uppercase labels
+            const subtaskLabels = orderedSubtasksData.map(subtask => `${findParentTaskName(subtask.id)}: ${subtask.name} (${formatTime(subtask.duration)})`);
             const subtaskData = orderedSubtasksData.map(subtask => subtask.duration);
             const subtaskBackgroundColors = orderedSubtasksData.map(subtask =>
                 subtask.name === 'Blank' ? blankSubtaskColor : softPalette[tasks.findIndex(task => task.subtasks.some(st => st.id === subtask.id)) % softPalette.length]
             );
 
-            const taskLabels = tasks.map(task => `${task.name.toUpperCase()} (${formatTime(calculateSubtaskTotalDuration(task))})`); // Uppercase labels
+            const taskLabels = tasks.map(task => `${task.name} (${formatTime(calculateSubtaskTotalDuration(task))})`);
             const taskData = tasks.map(task => calculateSubtaskTotalDuration(task));
             const taskBackgroundColors = tasks.map((_, index) => softPalette[index % softPalette.length]);
 
@@ -766,23 +578,21 @@
                         label: 'Sub-tasks',
                         data: subtaskData,
                         backgroundColor: subtaskBackgroundColors,
-                        borderColor: '#f8f8f8', // Soft outline color
                         borderWidth: 1,
+                        borderColor: '#333',
                         hoverOffset: 4,
                         weight: 0.7 // Make sub-tasks appear in the back (inner)
                     }, {
                         label: 'Tasks (based on subtask time)',
                         data: taskData,
                         backgroundColor: taskBackgroundColors,
-                        borderColor: '#f8f8f8', // Soft outline color
                         borderWidth: 1,
+                        borderColor: '#333',
                         hoverOffset: 4,
                         weight: 0.3 // Make tasks appear smaller (outer)
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
                     cutout: '40%', // Adjust for visual balance
                     plugins: {
                         legend: {
@@ -886,10 +696,10 @@
                     const listItem = document.createElement('li');
                     listItem.classList.add('task-item');
                     listItem.innerHTML = `
-                        <span>${task.name.toUpperCase()} (${formatTime(calculateTotalDuration(task))})</span>
+                        <span>${task.name} (${formatTime(calculateTotalDuration(task))})</span>
                         <div class="task-actions">
                             <button onclick="editTask(${task.id})">Edit</button>
-                            <button onclick="completeTask(${task.id}, false, this.parentNode.parentNode)">Complete</button>
+                            <button onclick="completeTask(${task.id}, false)">Complete</button>
                             <button onclick="cancelTask(${task.id})">Cancel</button>
                         </div>
                     `;
@@ -900,7 +710,7 @@
             finishedTasks.forEach(task => {
                 const listItem = document.createElement('li');
                 listItem.classList.add('task-item');
-                listItem.textContent = `${task.name.toUpperCase()} (${formatTime(calculateTotalDuration(task))})`;
+                listItem.textContent = `${task.name} (${formatTime(calculateTotalDuration(task))})`;
                 finishedTasksList.appendChild(listItem);
             });
         }
@@ -929,18 +739,13 @@
             }
         }
 
-        function completeTask(itemId, fromTimer = false, listItemElement = null) {
+        function completeTask(itemId, fromTimer = false) {
             const taskIndex = tasks.findIndex(task => task.id === itemId);
             if (taskIndex !== -1) {
                 const completedTask = tasks.splice(taskIndex, 1)[0];
                 completedTask.completed = true;
                 finishedTasks.push(completedTask);
-                if (listItemElement) {
-                    listItemElement.classList.add('fade-out');
-                    setTimeout(() => renderTaskLists(), 300); // Re-render after animation
-                } else {
-                    renderTaskLists();
-                }
+                renderTaskLists();
                 updateCurrentTaskListDisplay();
                 renderTaskPieChart();
                 renderSubtaskPieChart();
@@ -1021,12 +826,12 @@
             let totalDurationMinutes;
 
             if (item && item.subtask) {
-                title = item.subtask.name.toUpperCase(); // Uppercase title
+                title = item.subtask.name;
                 totalDurationMinutes = item.subtask.duration;
                 details = `Duration: ${formatTime(totalDurationMinutes)}`;
                 itemId = item.subtask.id;
             } else if (item) {
-                title = item.name.toUpperCase(); // Uppercase title
+                title = item.name;
                 totalDurationMinutes = calculateTotalDuration(item);
                 details = `Total Duration: ${formatTime(totalDurationMinutes)}`;
                 subtasksToShow = item.subtasks;
@@ -1041,7 +846,7 @@
             if (subtasksToShow && subtasksToShow.length > 0) {
                 subtaskList.innerHTML = '<strong>Sub-tasks:</strong><ul>';
                 subtasksToShow.forEach(subtask => {
-                    subtaskList.innerHTML += `<li>${subtask.name.toUpperCase()} (${formatTime(subtask.duration)})</li>`; // Uppercase subtask name
+                    subtaskList.innerHTML += `<li>${subtask.name} (${formatTime(subtask.duration)})</li>`;
                 });
                 subtaskList.innerHTML += '</ul>';
             } else if (item && item.subtask) {
@@ -1053,37 +858,26 @@
             document.getElementById('timerDisplay').textContent = '';
             selectedTaskOrSubtask = { type: item && item.subtask ? 'subtask' : 'task', id: itemId, duration: totalDurationMinutes * 60 };
 
-            popupContainer.style.display = 'block';
-            setTimeout(() => {
-                popup.classList.add('show');
-                overlay.classList.add('show');
-            }, 0);
-
+            document.getElementById('popupContainer').style.display = 'block';
             if (activeTimer && activeTimer.id === itemId) {
                 document.getElementById('timerDisplay').textContent = `Timer running: ${formatTime(activeTimer.remainingTime / 60)}`;
             }
         }
 
         function showPopup(title, details, type, id, duration) {
-            document.getElementById('popupTitle').textContent = title.toUpperCase(); // Uppercase title
+            document.getElementById('popupTitle').textContent = title;
             document.getElementById('popupDetails').textContent = details;
             document.getElementById('popupSubtaskList').innerHTML = '';
             document.getElementById('timerDisplay').textContent = '';
             selectedTaskOrSubtask = { type: type, id: id, duration: duration };
-            popupContainer.style.display = 'block';
-            setTimeout(() => {
-                popup.classList.add('show');
-                overlay.classList.add('show');
-            }, 0);
+            document.getElementById('popupContainer').style.display = 'block';
             if (activeTimer && activeTimer.id === id) {
                 document.getElementById('timerDisplay').textContent = `Timer running: ${formatTime(activeTimer.remainingTime / 60)}`;
             }
         }
 
         function closePopup() {
-            popup.classList.remove('show');
-            overlay.classList.remove('show');
-            setTimeout(() => popupContainer.style.display = 'none', 300);
+            document.getElementById('popupContainer').style.display = 'none';
             if (timerInterval) {
                 clearInterval(timerInterval);
                 timerInterval = null;
@@ -1130,13 +924,13 @@
                 remainingTime = Math.floor(difference / 1000);
                 activeTimer.remainingTime = remainingTime;
 
-                document.getElementById('timerDisplay').textContent = `Time Remaining: ${formatTime(remainingTime / 60)}`; // Uppercase timer label
+                document.getElementById('timerDisplay').textContent = `Time remaining: ${formatTime(remainingTime / 60)}`;
 
                 if (difference <= 0) {
                     clearInterval(timerInterval);
                     timerInterval = null;
                     activeTimer = null;
-                    alert(`${itemName.toUpperCase()} COMPLETED!`); // Uppercase alert
+                    alert(`${itemName} completed!`);
                     completeTask(itemId, true);
                     closePopup();
                 }
@@ -1153,9 +947,9 @@
             const minutes = Math.floor(totalMinutes % 60);
             const seconds = Number.isInteger(totalMinutes) ? 0 : Math.floor((totalMinutes - Math.floor(totalMinutes)) * 60);
             if (seconds > 0) {
-                return `${hours}H ${minutes}M ${seconds}S`; // Uppercase time units
+                return `${hours}h ${minutes}m ${seconds}s`;
             } else {
-                return `${hours}H ${minutes}M`; // Uppercase time units
+                return `${hours}h ${minutes}m`;
             }
         }
 
@@ -1164,18 +958,6 @@
         updateCurrentTaskListDisplay();
         renderTaskLists();
         openTab('combinedChart'); // Default to the combined chart tab
-
-        // Add fade-out animation class
-        const styleSheet = document.createElement("style");
-        styleSheet.type = "text/css";
-        styleSheet.innerText = `
-            .task-item.fade-out {
-                opacity: 0;
-                transform: translateX(-20px);
-                transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-            }
-        `;
-        document.head.appendChild(styleSheet);
     </script>
 
 </body>
